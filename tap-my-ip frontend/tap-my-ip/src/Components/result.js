@@ -8,6 +8,7 @@ function Result(){
 const [ipDetails, setIpDetails] = useState(null)
 let { ip } = useParams()
 
+
 const requestOptions = {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
@@ -21,10 +22,6 @@ if(!ipDetails) {
         setIpDetails(data)
       });
 }
-  // useEffect(()=> {
-  //   fetchData()
-  // }, [])
-
 
     return(
     <div id="typed-strings">
