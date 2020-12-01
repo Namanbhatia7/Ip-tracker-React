@@ -9,10 +9,7 @@ var cors = require('cors');
 const app = express();
 app.use(cors());
 app.use(express.static("Public"));
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-
+app.use(bodyParser.json());
 
 
 app.set('view engine', 'ejs');
@@ -28,9 +25,11 @@ app.post("/", function (req, res) {
 })
 
 app.post("/result", function (req, res) {
+    console.log(req.body)
     var ipAddress = req.body.ip;
     var URL = "http://ip-api.com/json/" + ipAddress
-
+    console.log("REQUEST")
+    console.log(ipAddress)
     request(URL, function (error, response, body) {
         var loc = JSON.parse(body)
         console.log(loc);
