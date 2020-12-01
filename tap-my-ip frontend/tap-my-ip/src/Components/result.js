@@ -28,8 +28,17 @@ if(!ipDetails) {
 
     return(
     <div id="typed-strings">
-    <p className="initial">$desktop/bin/temp/details:- loading...</p>
-    <p >details: {JSON.stringify(ipDetails)}</p>
+    <p className="initial">$desktop/bin/temp/details:-</p>
+    <p >details: </p>
+    {ipDetails? (
+      Object.keys(ipDetails).map((data, idx)=> {
+        return(
+        <p key={idx}>{data}: {Object.values(ipDetails)[idx]}</p>
+        )
+      })):
+      <>Loading Details...</>
+    }
+
     
     <p>$status:- CLEARED ! Hit f5 to refresh!</p>
   </div>
