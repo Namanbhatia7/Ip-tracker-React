@@ -1,40 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {useParams} from 'react-router-dom'
 import '../assets/styles.css'
 
 function Result(){
 
-const [ipdetails, setDetails] = useState([]);
+const [ipDetails, setIpDetails] = useState(null)
+let { ip } = useParams()
 
-   
-    // fetch("http://localhost:5000/result",{
-    //     headers : { 
-    //         'Content-Type': 'application/json',
-    //         'Accept': 'application/json'
-    //        }
+const requestOptions = {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({"ip": ip})
+};
 
-    // })
-    //     .then((response) => response.json())
-    //     .then((data) => setDetails(JSON.stringify(data)));       
-
-
-    const fetchData = async () => {
-        const result = await axios(
-          'http://localhost:5000/result',
-        );
-        setDetails(result.data);
-    }
-        fetchData();
-     
-
-
-console.log(ipdetails);
+if(!ipDetails) {
+  fetch(`http://localhost:5000/result`, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        setIpDetails(data)
+      });
+}
+  // useEffect(()=> {
+  //   fetchData()
+  // }, [])
 
 
     return(
-        <div id="typed-strings">
-    <p className="initial">$desktop/bin/temp/details:- loading...</p>
-    <p >details: {ipdetails}</p>
+    <div id="typed-strings">
+    <p className="initial">$desktop/bin/temp/details:-</p>
+    <p >details: </p>
+    {ipDetails? (
+      Object.keys(ipDetails).map((data, idx)=> {
+        return(
+        <p key={idx}>{data}: {Object.values(ipDetails)[idx]}</p>
+        )
+      })):
+      <>Loading Details...</>
+    }
+
     
     <p>$status:- CLEARED ! Hit f5 to refresh!</p>
   </div>
